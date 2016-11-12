@@ -8,23 +8,35 @@ STACK new_stack() {
 }
 
 void push_stack(STACK *s, SVALUE val) {
-    STACK new = (STACK) malloc(sizeof(struct stack));
-    new->data = val;
-    new->head = *s;
-    *s = new;
+    STACK new = (STACK) malloc(sizeof(struct stack)); //create a pointer to a stack called new and allocate memory for it
+    new->data = val; //set the data in the structure being pointed to by new to val
+    new->head = *s; //make new->head point to the same thing s is pointing to 
+    *s = new; //make s point to the same thing new is pointing to
 }
 
 SVALUE pop_stack(STACK *s) {
     SVALUE val;
     STACK temp;
-    if (*s == NULL) {
-      val = -1;
+    if (*s == NULL) { //test to see if stack is empty
+      val = -1; //set val to -1 if stack is empty; this will be returned by thr function
     }
-    else {
-      val = (*s)->data;
-      temp = (*s);
-      *s = (*s)->head;
-      free(temp);
+    else { //for a non-empty stack
+      val = (*s)->data; //set val to the value in the structure being pointed to by s
+      temp = (*s);  //make temp point to the same structure s is pointing to
+      *s = (*s)->head; //go to the structure being pointed to by s, then set s to that
+      free(temp); //free temp, which points to the structure with val, which we want to remove now
     }
-    return val;
+    return val; //return the data from the removed structure
+}
+
+void print_svalue(SVALUE val) {
+    int sVal = (int) val; //cast val to an int
+    printf("%i", sVal); //print the value as an int
+}
+
+void print_stack(STACK s) {
+    while (s != NULL) { //while pointer is pointing to structure with data
+        print_svalue(pop_stack(&s)); //pop from s, return the popped value, then print the value
+        puts(""); //add a newline
+    } 
 }
