@@ -36,7 +36,8 @@ void print_svalue(SVALUE val) {
 
 void print_stack(STACK s) {
     while (s != NULL) { //while pointer is pointing to structure with data
-        print_svalue(pop_stack(&s)); //pop from s, return the popped value, then print the value
+        print_svalue(s->data); //print the data
         puts(""); //add a newline
+        s = (s->head); //move to the next item in the stack
     } 
 }
